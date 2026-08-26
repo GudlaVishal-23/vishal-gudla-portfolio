@@ -1,0 +1,460 @@
+/* Spider-Verse Comic Edition Portfolio Stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --spidey-red: #E23636;
+  --spidey-red-glow: rgba(226, 54, 54, 0.6);
+  --spidey-crimson: #bb161f;
+  --comic-black: #050505;
+  --comic-white: #f8f9fa;
+  --comic-gray: #c8c6c5;
+  --surface-dark: #111111;
+  --surface-card: #161818;
+  --surface-card-border: rgba(255, 255, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--comic-black);
+}
+
+body {
+  background-color: var(--comic-black);
+  color: var(--comic-white);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  cursor: none; /* Handled by custom cursor */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+  border-left: 1px solid #222;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--spidey-red);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff544e;
+}
+
+/* Custom Cursor */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: var(--spidey-red);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+  box-shadow: 0 0 10px var(--spidey-red);
+  transition: width 0.2s cubic-bezier(0.25, 1, 0.5, 1), 
+              height 0.2s cubic-bezier(0.25, 1, 0.5, 1),
+              background-color 0.2s,
+              border 0.2s;
+}
+
+#cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99998;
+  width: 100vw;
+  height: 100vh;
+}
+
+#trail-path {
+  fill: none;
+  stroke: rgba(226, 54, 54, 0.45);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(226, 54, 54, 0.8));
+}
+
+/* Halftone Pattern */
+.halftone-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+}
+
+.halftone-dense {
+  background-image: radial-gradient(#222 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
+}
+
+/* Comic styling elements */
+.comic-border {
+  border: 3px solid #f8f9fa;
+}
+
+.comic-border-red {
+  border: 3px solid var(--spidey-red);
+}
+
+.comic-border-dark {
+  border: 3px solid #050505;
+}
+
+.shadow-comic {
+  box-shadow: 6px 6px 0px 0px var(--spidey-red);
+}
+
+.shadow-comic-white {
+  box-shadow: 6px 6px 0px 0px #f8f9fa;
+}
+
+.shadow-comic-dark {
+  box-shadow: 6px 6px 0px 0px #050505;
+}
+
+.shadow-comic-hover:hover {
+  box-shadow: 8px 8px 0px 0px var(--spidey-red);
+  transform: translate(-2px, -2px);
+}
+
+/* Spider-Verse Glows */
+.spidey-glow {
+  text-shadow: 0 0 12px rgba(226, 54, 54, 0.7), 0 0 24px rgba(226, 54, 54, 0.4);
+}
+
+.spidey-text-stroke {
+  -webkit-text-stroke: 2px #fff;
+  text-shadow: 5px 5px 0 var(--spidey-red);
+}
+
+.spidey-text-stroke-dark {
+  -webkit-text-stroke: 2px #050505;
+  text-shadow: 4px 4px 0 var(--spidey-red);
+}
+
+/* Entrance Animations */
+.swing-up {
+  opacity: 0;
+  transform: translateY(40px) rotate(-1.5deg) scale(0.96);
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swing-up.visible {
+  opacity: 1;
+  transform: translateY(0) rotate(0deg) scale(1);
+}
+
+.swing-right {
+  opacity: 0;
+  transform: translateX(-40px) rotate(1.5deg);
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swing-right.visible {
+  opacity: 1;
+  transform: translateX(0) rotate(0deg);
+}
+
+.swing-left {
+  opacity: 0;
+  transform: translateX(40px) rotate(-1.5deg);
+  transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.swing-left.visible {
+  opacity: 1;
+  transform: translateX(0) rotate(0deg);
+}
+
+/* Interactive Skill Web Canvas & Nodes */
+.skill-web-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  background: #090a0a;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+#skill-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.skill-node {
+  position: absolute;
+  background: #0d0f0f;
+  border: 2px solid #ffffff;
+  color: #f8f9fa;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 10;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px 0px #000;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.skill-node.core-node {
+  background: #1a0404;
+  border: 3px solid var(--spidey-red);
+  color: var(--spidey-red);
+  font-size: 15px;
+  padding: 12px 24px;
+  box-shadow: 0 0 25px rgba(226, 54, 54, 0.5), 5px 5px 0px 0px #fff;
+  z-index: 25;
+}
+
+.skill-node:hover {
+  border-color: var(--spidey-red);
+  color: #ffffff;
+  background: var(--spidey-red);
+  box-shadow: 0 0 20px rgba(226, 54, 54, 0.8), 4px 4px 0px 0px #ffffff;
+  transform: translate(-50%, -50%) scale(1.12) !important;
+}
+
+.skill-node.core-node:hover {
+  background: #ffffff;
+  color: var(--spidey-red);
+  border-color: var(--spidey-red);
+  box-shadow: 0 0 35px rgba(226, 54, 54, 0.9), 6px 6px 0px 0px var(--spidey-red);
+}
+
+/* Glitch Effect on Title */
+.glitch-hover:hover {
+  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* 3D Card Hover Perspective */
+.card-3d-perspective {
+  perspective: 1000px;
+}
+
+.card-3d-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card-3d-perspective:hover .card-3d-inner {
+  transform: rotateX(4deg) rotateY(-4deg) translateY(-4px);
+}
+
+/* Interactive Web Ripple Background */
+#webgl-bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Comic Speech Bubble Tails */
+.speech-bubble-tail-left {
+  position: absolute;
+  left: -14px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-right: 15px solid #050505;
+  border-bottom: 10px solid transparent;
+}
+
+.speech-bubble-tail-left::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: -8px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 13px solid #ffffff;
+  border-bottom: 8px solid transparent;
+}
+
+/* ====================================================
+   HERO PIXEL-BY-PIXEL TRANSITION ENGINE
+==================================================== */
+.hero-reveal-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #050505;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hero-reveal-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+/* Mask Layer (Default Visible) */
+.hero-mask-base {
+  z-index: 1;
+  opacity: 1;
+}
+
+/* Real Photo Layer */
+.hero-real-photo {
+  z-index: 2;
+  opacity: 0;
+}
+
+.hero-reveal-container.is-revealed .hero-mask-base {
+  opacity: 0;
+}
+
+.hero-reveal-container.is-revealed .hero-real-photo {
+  opacity: 1;
+}
+
+/* Pixel Transition Canvas Overlay */
+.hero-pixel-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.hero-pixel-canvas.active {
+  opacity: 1;
+}
+
+/* Expanding Cyber Ring on Click */
+.hero-scan-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--spidey-red);
+  box-shadow: 0 0 25px var(--spidey-red), 0 0 50px rgba(226, 54, 54, 0.9), inset 0 0 20px var(--spidey-red);
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: none;
+  will-change: transform, opacity;
+}
+
+.hero-scan-wave.animating {
+  animation: heroScanWaveBurst 0.75s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
+}
+
+@keyframes heroScanWaveBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(45);
+  }
+}
+
+/* Cyber Matrix Glitch Scanlines on Transition */
+.hero-scanline-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(226, 54, 54, 0.2) 2px,
+    rgba(226, 54, 54, 0.2) 4px
+  );
+  transition: opacity 0.2s ease;
+}
+
+.hero-reveal-container.animating-pixels .hero-scanline-overlay {
+  opacity: 1;
+  animation: pixelScanlineScroll 0.3s linear infinite;
+}
+
+@keyframes pixelScanlineScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+
+/* Pixel Reconstruction Progress Ticker */
+.hero-pixel-hud {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  background: rgba(5, 5, 5, 0.92);
+  border: 2px solid var(--spidey-red);
+  padding: 10px 18px;
+  box-shadow: 0 0 30px rgba(226, 54, 54, 0.7), 4px 4px 0px 0px #ffffff;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.hero-pixel-hud.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Hover glow pulse on container */
+.hero-reveal-container:hover {
+  box-shadow: inset 0 0 30px rgba(226, 54, 54, 0.35);
+}

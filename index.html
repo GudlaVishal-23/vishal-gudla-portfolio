@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Gudla Vishal — Cybersecurity Student & AI Engineer | Spider-Verse Portfolio</title>
+  
+  <!-- Tailwind CSS CDN with Forms & Container Queries -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Material Symbols & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Tailwind Custom Config Matching Stitch Design Theme -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "spidey-red": "#E23636",
+            "spidey-crimson": "#93000a",
+            "comic-black": "#050505",
+            "comic-dark": "#0d0f0f",
+            "comic-surface": "#121414",
+            "comic-card": "#181a1a",
+            "comic-white": "#f8f9fa",
+            "comic-gray": "#c8c6c5",
+            "comic-yellow": "#facc15"
+          },
+          fontFamily: {
+            "montserrat": ["Montserrat", "sans-serif"],
+            "inter": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          },
+          boxShadow: {
+            'comic': '5px 5px 0px 0px #E23636',
+            'comic-lg': '8px 8px 0px 0px #E23636',
+            'comic-white': '5px 5px 0px 0px #f8f9fa',
+            'comic-dark': '6px 6px 0px 0px #050505',
+            'comic-yellow': '5px 5px 0px 0px #facc15'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body class="bg-comic-black text-comic-white antialiased relative selection:bg-spidey-red selection:text-white">
+
+  <!-- Custom Spider-Web Cursor Elements -->
+  <div id="custom-cursor"></div>
+  <svg id="cursor-trail">
+    <path id="trail-path" d=""></path>
+  </svg>
+
+  <!-- Global WebGL Background Spider-Strands Shader -->
+  <div class="fixed inset-0 z-0 pointer-events-none opacity-45">
+    <canvas id="webgl-bg-canvas"></canvas>
+  </div>
+
+  <!-- Top Fixed HUD Navigation Bar -->
+  <nav class="fixed top-0 w-full z-50 border-b-2 border-spidey-red/40 bg-comic-black/90 backdrop-blur-xl shadow-[0_4px_25px_rgba(226,54,54,0.18)]">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8 py-3.5">
+      
+      <!-- Brand Logo -->
+      <a class="flex items-center gap-3 group" href="#hero">
+        <div class="w-9 h-9 bg-spidey-red border-2 border-white flex items-center justify-center font-black text-lg text-white transform -rotate-6 group-hover:rotate-0 transition-transform shadow-[3px_3px_0_0_#fff]">
+          <i class="fa-solid fa-spider"></i>
+        </div>
+        <div>
+          <span class="font-montserrat text-xl sm:text-2xl font-black italic uppercase tracking-tighter text-white group-hover:text-spidey-red transition-colors block leading-none">
+            GUDLA VISHAL
+          </span>
+          <span class="font-mono text-[9px] uppercase tracking-widest text-spidey-red font-bold">CYBER // AI ARCHITECT</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden lg:flex items-center space-x-6">
+        <a class="text-spidey-red font-black text-xs uppercase tracking-widest hover:text-white transition-all flex items-center gap-1" href="#hero">
+          <span class="w-1.5 h-1.5 bg-spidey-red rounded-full animate-ping"></span> Issue #1
+        </a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#about">Origin</a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#experience">Missions</a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#skills">Skill Web</a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#projects">Deployments</a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#awards">Honors</a>
+        <a class="text-comic-gray font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-all" href="#education">Education</a>
+      </div>
+
+      <!-- Action Button -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#contact" class="px-5 py-2 bg-spidey-red text-white font-montserrat font-black text-xs uppercase tracking-widest border-2 border-white hover:bg-white hover:text-spidey-red hover:border-spidey-red transition-all shadow-comic hover:shadow-none transform hover:-translate-y-0.5">
+          SIGNAL ME
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" class="lg:hidden text-spidey-red p-1 focus:outline-none" aria-label="Toggle navigation">
+        <span class="material-symbols-outlined text-3xl font-black">menu</span>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-comic-black border-b-2 border-spidey-red px-6 py-5 space-y-3 font-montserrat font-black text-sm uppercase">
+      <a class="block text-spidey-red hover:text-white py-1" href="#hero">Issue #1 // Home</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#about">Issue #2 // Origin</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#experience">Issue #3 // Work Experience</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#skills">Issue #4 // Skill Web</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#projects">Issue #5 // Deployments</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#awards">Issue #6 // Honors & Certs</a>
+      <a class="block text-comic-gray hover:text-spidey-red py-1" href="#education">Issue #7 // Education</a>
+      <a class="block text-spidey-red hover:text-white py-2 border-t border-gray-800" href="#contact">Transmit Signal</a>
+    </div>
+  </nav>
+
+  <!-- Main Content Wrapper -->
+  <main class="relative z-10 w-full pt-20">
+
+    <!-- ====================================================
+         HERO SECTION (ISSUE #1) - WITH PIXEL-BY-PIXEL MORPH ENGINE
+    ==================================================== -->
+    <section class="min-h-[90vh] flex items-center px-4 sm:px-8 lg:px-16 py-12 lg:py-20 relative overflow-hidden" id="hero">
+      
+      <!-- Halftone & Ambient Glow -->
+      <div class="absolute inset-0 halftone-bg opacity-25 pointer-events-none"></div>
+      <div class="absolute top-1/4 -right-20 w-96 h-96 bg-spidey-red rounded-full mix-blend-screen filter blur-[120px] opacity-20 animate-pulse pointer-events-none"></div>
+      <div class="absolute bottom-10 -left-20 w-80 h-80 bg-red-800 rounded-full mix-blend-screen filter blur-[100px] opacity-15 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center w-full relative z-10">
+        
+        <!-- Hero Text Column -->
+        <div class="lg:col-span-7 flex flex-col justify-center items-start swing-right">
+          
+          <!-- Identity Skew Badge -->
+          <div class="inline-flex items-center gap-2 bg-spidey-red text-white px-4 py-1.5 font-montserrat font-black text-xs uppercase tracking-widest mb-6 border-2 border-white transform -skew-x-12 shadow-[4px_4px_0_0_#fff]">
+            <span class="material-symbols-outlined text-sm">verified_user</span>
+            <span>IDENTITY CONFIRMED // CYBERSECURITY & AI</span>
+          </div>
+
+          <!-- Hero Display Name -->
+          <h1 class="font-montserrat font-black text-5xl sm:text-7xl lg:text-8xl text-comic-white uppercase italic tracking-tighter mb-4 leading-[0.9] drop-shadow-[0_0_20px_rgba(0,0,0,0.9)]">
+            GUDLA<br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-spidey-red via-red-500 to-rose-400 spidey-text-stroke">
+              VISHAL
+            </span>
+          </h1>
+
+          <!-- Headline & Focus -->
+          <p class="font-montserrat font-bold text-lg sm:text-xl lg:text-2xl text-comic-white mb-4 leading-tight">
+            Cybersecurity Student <span class="text-spidey-red">&bull;</span> Full Stack & AI Engineer <br/>
+            <span class="text-spidey-red font-extrabold">Salesforce & Google Gen AI Intern</span> Proficient in DSA with C++
+          </p>
+
+          <p class="font-inter text-sm sm:text-base text-gray-300 mb-8 max-w-xl leading-relaxed">
+            Weaving high-resilience cybersecurity defenses, agentic AI frameworks with LangGraph, and multi-threaded distributed networks into elegant real-world systems.
+          </p>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap gap-4 items-center">
+            <a href="#projects" class="px-7 py-3.5 bg-spidey-red text-white font-montserrat font-black text-xs uppercase tracking-widest border-2 border-white hover:bg-white hover:text-spidey-red hover:border-spidey-red transition-all shadow-comic-white hover:shadow-none transform hover:-translate-y-1">
+              <i class="fa-solid fa-crosshairs mr-2"></i> View Missions
+            </a>
+            <a href="#contact" class="px-7 py-3.5 bg-transparent border-2 border-spidey-red text-spidey-red font-montserrat font-black text-xs uppercase tracking-widest hover:bg-spidey-red hover:text-white transition-all shadow-[4px_4px_0_0_#000]">
+              <i class="fa-solid fa-satellite-dish mr-2"></i> Signal Me
+            </a>
+            <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="px-5 py-3.5 bg-comic-dark border-2 border-gray-600 text-comic-gray hover:text-white hover:border-white font-montserrat font-black text-xs uppercase tracking-widest transition-all">
+              <i class="fa-brands fa-github text-base mr-1.5"></i> GitHub
+            </a>
+          </div>
+
+          <!-- Quick Stat Strip -->
+          <div class="mt-10 grid grid-cols-3 gap-4 border-t-2 border-gray-800 pt-6 w-full max-w-lg">
+            <div>
+              <div class="font-montserrat font-black text-2xl text-spidey-red">4+</div>
+              <div class="font-inter font-bold text-[11px] text-gray-400 uppercase tracking-wider">Internships</div>
+            </div>
+            <div>
+              <div class="font-montserrat font-black text-2xl text-spidey-red">4+</div>
+              <div class="font-inter font-bold text-[11px] text-gray-400 uppercase tracking-wider">Key Projects</div>
+            </div>
+            <div>
+              <div class="font-montserrat font-black text-2xl text-spidey-red">6+</div>
+              <div class="font-inter font-bold text-[11px] text-gray-400 uppercase tracking-wider">Certifications</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Pixel-by-Pixel Matrix Morph Asset Column -->
+        <div class="lg:col-span-5 h-[460px] sm:h-[520px] lg:h-[580px] relative swing-up" style="transition-delay: 0.2s;">
+          
+          <!-- Outer Comic Frame -->
+          <div class="absolute inset-0 comic-border bg-comic-black shadow-comic transform rotate-1 hover:rotate-0 transition-transform duration-500 z-10 overflow-hidden group">
+            
+            <!-- Interactive Hero Reveal Container (Click to Trigger Pixel-by-Pixel Morph) -->
+            <div id="heroRevealContainer" class="hero-reveal-container w-full h-full group" title="Click anywhere to trigger pixel-by-pixel transformation">
+              
+              <!-- Layer 1: Base Mask Image (Split face - Default Visible) -->
+              <img src="mask-image.png" alt="Gudla Vishal - Cyber & AI Spider Mask" class="hero-reveal-img hero-mask-base" />
+
+              <!-- Layer 2: Real Portrait Photo -->
+              <img src="real-photo.jpg" alt="Gudla Vishal - Real Portrait Photo" class="hero-reveal-img hero-real-photo" />
+
+              <!-- Layer 3: High-Performance Canvas for Pixel-by-Pixel Morphing -->
+              <canvas id="heroPixelCanvas" class="hero-pixel-canvas"></canvas>
+
+              <!-- Layer 4: Expanding Shockwave Scan Wave on Click -->
+              <div id="heroScanWave" class="hero-scan-wave"></div>
+
+              <!-- Layer 5: Matrix Glitch Scanlines Overlay -->
+              <div class="hero-scanline-overlay"></div>
+
+              <!-- Layer 6: Tactical Pixel Ticker HUD Overlay -->
+              <div id="heroPixelHUD" class="hero-pixel-hud">
+                <div id="pixelProgressText" class="font-mono text-xs font-black text-spidey-red tracking-widest uppercase mb-1.5 flex items-center justify-center gap-1.5">
+                  <i class="fa-solid fa-microchip animate-spin"></i> RECONSTRUCTING PIXELS: 0%
+                </div>
+                <div class="w-48 h-2 bg-gray-800 border border-gray-600 overflow-hidden">
+                  <div id="pixelProgressBar" class="h-full bg-spidey-red transition-all duration-75" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <!-- Comic Frame Corner Accents -->
+              <div class="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-spidey-red z-20 pointer-events-none"></div>
+              <div class="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-spidey-red z-20 pointer-events-none"></div>
+              <div class="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-spidey-red z-20 pointer-events-none"></div>
+              <div class="absolute bottom-3 right-3 w-8 h-8 border-b-2 border-r-2 border-spidey-red z-20 pointer-events-none"></div>
+
+              <!-- Tactical HUD Header Badges -->
+              <div class="absolute top-4 right-4 bg-comic-black/90 border border-spidey-red px-3 py-1 z-20 pointer-events-none shadow-[2px_2px_0_0_#E23636] flex items-center gap-2">
+                <span class="w-2 h-2 bg-spidey-red rounded-full animate-ping"></span>
+                <span class="font-mono text-[10px] text-white font-black uppercase tracking-widest">TAP / CLICK FOR PIXEL MORPH</span>
+              </div>
+
+              <!-- Tactical HUD Bottom Status Bar with Live State Label -->
+              <div class="absolute bottom-4 left-4 right-4 bg-comic-black/90 border border-white/50 px-3.5 py-2 z-20 flex justify-between items-center backdrop-blur-md shadow-[4px_4px_0_0_#000]">
+                <div id="heroStatusLabel" class="font-mono text-xs flex items-center gap-2">
+                  <span class="text-spidey-red font-black flex items-center gap-1.5">
+                    <i class="fa-solid fa-mask animate-pulse"></i> SPIDER SUIT ACTIVE
+                  </span>
+                  <span class="text-gray-300 font-mono text-[10px] hidden sm:inline">// CLICK TO UNMASK</span>
+                </div>
+
+                <button id="toggleIdentityBtn" class="px-2.5 py-1 bg-spidey-red hover:bg-white hover:text-spidey-red font-montserrat font-black text-[10px] uppercase text-white border border-white transition-all shadow-[2px_2px_0_0_#fff]">
+                  MORPH
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Comic Drop Background Card -->
+          <div class="absolute inset-0 border-2 border-gray-700 bg-transparent transform -rotate-2 translate-x-4 translate-y-4 z-0 pointer-events-none"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         ORIGIN STORY / ABOUT SECTION (ISSUE #2) - FEATURING ORIGIN PHOTO
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-white text-comic-black relative z-10 border-y-4 border-comic-black overflow-hidden" id="about">
+      <div class="absolute inset-0 halftone-dense opacity-10 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col items-center mb-16 swing-up">
+          <div class="bg-spidey-red text-white px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-black shadow-[3px_3px_0_0_#000]">
+            ISSUE #2
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-comic-black border-b-4 border-spidey-red pb-2 inline-block">
+            Origin Story
+          </h2>
+          <p class="font-mono text-xs text-gray-700 mt-2 font-bold uppercase tracking-widest">
+            CLASSIFICATION: CYBER DEFENDER // AI ARCHITECT
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Origin Image Holder / Tactical Comic Panel -->
+          <div class="lg:col-span-5 swing-right">
+            <div class="relative w-full h-[480px] sm:h-[530px] border-4 border-comic-black bg-comic-black shadow-[8px_8px_0_0_#E23636] overflow-hidden group">
+              
+              <!-- Origin Photo Image -->
+              <img src="origin-photo.jpg" alt="Gudla Vishal - Sphoorthy Engineering College" 
+                   class="w-full h-full object-cover object-[center_18%] group-hover:scale-105 transition-transform duration-700 select-none" />
+
+              <!-- Comic Halftone & Gradient Vignette -->
+              <div class="absolute inset-0 bg-gradient-to-t from-comic-black via-black/25 to-transparent pointer-events-none"></div>
+
+              <!-- Comic Caption Box (Top Left) -->
+              <div class="absolute top-4 left-4 bg-comic-yellow text-comic-black border-2 border-comic-black p-3 max-w-[240px] shadow-comic-dark transform -rotate-2 z-20 pointer-events-none">
+                <p class="font-montserrat font-black text-xs uppercase leading-tight flex items-center gap-1.5">
+                  <i class="fa-solid fa-graduation-cap text-black"></i> SPHOORTHY ENGG COLLEGE
+                </p>
+                <p class="font-inter text-[10px] font-bold text-gray-900 mt-0.5">Hyderabad, Telangana &bull; B.Tech Cyber</p>
+              </div>
+
+              <!-- Tactical Verified Badge (Top Right) -->
+              <div class="absolute top-4 right-4 bg-comic-black/90 border border-spidey-red px-2.5 py-1 z-20 pointer-events-none shadow-[2px_2px_0_0_#E23636]">
+                <span class="font-mono text-[10px] text-spidey-red font-bold uppercase tracking-widest flex items-center gap-1.5">
+                  <span class="w-2 h-2 bg-spidey-red rounded-full animate-ping"></span> DOSSIER // AGENT #01
+                </span>
+              </div>
+
+              <!-- Comic Frame Corner Accents -->
+              <div class="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-white z-20 pointer-events-none"></div>
+              <div class="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-white z-20 pointer-events-none"></div>
+              <div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-white z-20 pointer-events-none"></div>
+              <div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-white z-20 pointer-events-none"></div>
+
+              <!-- Badge & Identity Info at Bottom -->
+              <div class="absolute bottom-0 left-0 p-6 w-full z-20 pointer-events-none bg-gradient-to-t from-comic-black via-black/80 to-transparent">
+                <div class="inline-block bg-spidey-red text-white text-[10px] font-black uppercase px-2.5 py-1 mb-1.5 border border-white tracking-wider shadow-[2px_2px_0_0_#000]">
+                  CYBERSECURITY & AI ENGINEER
+                </div>
+                <h3 class="font-montserrat text-2xl sm:text-3xl font-black text-white uppercase italic tracking-tight drop-shadow-md">
+                  GUDLA VISHAL
+                </h3>
+                <p class="font-mono font-bold text-xs text-gray-300 uppercase tracking-widest mt-1 flex items-center gap-1.5">
+                  <i class="fa-solid fa-location-dot text-spidey-red"></i> Base: Hyderabad, Telangana, India
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Origin Description & Speech Bubble Panel -->
+          <div class="lg:col-span-7 swing-left">
+            <div class="bg-white border-4 border-comic-black p-8 sm:p-10 shadow-[8px_8px_0_0_#050505] relative">
+              
+              <!-- Speech Bubble Indicator -->
+              <div class="speech-bubble-tail-left hidden lg:block"></div>
+
+              <div class="flex items-center gap-2 mb-4 text-spidey-red font-montserrat font-black text-xs uppercase tracking-widest">
+                <span class="material-symbols-outlined text-base">psychology</span> MISSION DIRECTIVE & PHILOSOPHY
+              </div>
+
+              <p class="font-inter font-bold text-lg sm:text-xl text-comic-black leading-snug mb-4">
+                "With great power comes great responsibility—especially when building autonomous AI agents and securing critical digital infrastructure."
+              </p>
+
+              <p class="font-inter text-sm sm:text-base text-gray-800 leading-relaxed mb-4">
+                As a Cybersecurity Student with a creative mind and a knack for problem-solving, I am driven to protect digital landscapes. My smart-working approach, coupled with strong leadership potential, allows me to not only identify vulnerabilities but also conceptualize innovative solutions.
+              </p>
+
+              <p class="font-inter text-sm sm:text-base text-gray-800 leading-relaxed mb-6">
+                A proficient programmer always learning new things, I am dedicated to continuously expanding my expertise in defensive and offensive security, agentic AI graphs, real-time computer vision systems, and robust cloud services to build resilient architectures.
+              </p>
+
+              <!-- Superhero Capabilities Checklist -->
+              <div class="border-t-2 border-dashed border-gray-300 pt-5 space-y-3 font-montserrat font-bold text-xs sm:text-sm uppercase tracking-wide text-comic-black">
+                <div class="flex items-center gap-3">
+                  <span class="w-6 h-6 bg-spidey-red text-white flex items-center justify-center text-xs font-black rounded-none border border-black shadow-[2px_2px_0_0_#000]">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </span>
+                  <span>Defensive & Offensive Security & Cryptography</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-6 h-6 bg-spidey-red text-white flex items-center justify-center text-xs font-black rounded-none border border-black shadow-[2px_2px_0_0_#000]">
+                    <i class="fa-solid fa-network-wired"></i>
+                  </span>
+                  <span>Agentic Multi-Agent Frameworks (LangGraph, Groq, LangChain)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-6 h-6 bg-spidey-red text-white flex items-center justify-center text-xs font-black rounded-none border border-black shadow-[2px_2px_0_0_#000]">
+                    <i class="fa-solid fa-code"></i>
+                  </span>
+                  <span>High-Performance DSA with C++, Python & Full-Stack MERN</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="w-6 h-6 bg-spidey-red text-white flex items-center justify-center text-xs font-black rounded-none border border-black shadow-[2px_2px_0_0_#000]">
+                    <i class="fa-solid fa-cloud"></i>
+                  </span>
+                  <span>Enterprise Salesforce (Apex, LWC) & Google Cloud GenAI</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         WORK EXPERIENCE & INTERNSHIPS (ISSUE #3)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-black relative z-10 border-b-4 border-comic-white overflow-hidden" id="experience">
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center mb-16 swing-up">
+          <div class="bg-white text-black px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-spidey-red shadow-[3px_3px_0_0_#E23636]">
+            ISSUE #3
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-spidey-red border-b-4 border-white pb-2 inline-block">
+            Mission Timeline
+          </h2>
+          <p class="font-mono text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest">
+            WORK EXPERIENCE & PROFESSIONAL INTERNSHIPS
+          </p>
+        </div>
+
+        <!-- Timeline Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Experience Card 1: Teaching Intern -->
+          <div class="bg-comic-surface border-4 border-comic-white p-7 shadow-comic hover:-translate-y-1.5 transition-transform duration-300 swing-up relative group">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="bg-spidey-red text-white text-[10px] font-black uppercase px-2.5 py-1 border border-white tracking-widest">
+                  CURRENT ROLE
+                </span>
+                <h3 class="font-montserrat text-2xl font-black text-white uppercase italic tracking-tight mt-2">
+                  1. Teaching Intern
+                </h3>
+                <p class="font-montserrat font-bold text-sm text-spidey-red">Sphoorthy Engineering College</p>
+              </div>
+              <span class="font-mono text-xs text-gray-300 bg-comic-dark px-2.5 py-1 border border-gray-700 font-bold">
+                Jan 2026 – Present
+              </span>
+            </div>
+            
+            <p class="font-mono text-[11px] text-gray-400 mb-4 flex items-center gap-1.5">
+              <i class="fa-solid fa-location-dot text-spidey-red"></i> Hyderabad, Telangana, India
+            </p>
+
+            <ul class="space-y-2.5 text-xs text-gray-300 font-inter font-medium border-t border-gray-800 pt-4">
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Mentored students in programming fundamentals, computational thinking, and core computer science concepts.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Classroom management and structured technical mentoring.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Assisted students in mastering algorithmic problem solving and logic design.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Conducted hands-on laboratory sessions on programming and data structures.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Experience Card 2: MERN Intern -->
+          <div class="bg-comic-surface border-4 border-comic-white p-7 shadow-comic hover:-translate-y-1.5 transition-transform duration-300 swing-up relative group" style="transition-delay: 0.1s;">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="bg-yellow-400 text-black text-[10px] font-black uppercase px-2.5 py-1 border border-black tracking-widest">
+                  FULL STACK
+                </span>
+                <h3 class="font-montserrat text-2xl font-black text-white uppercase italic tracking-tight mt-2">
+                  2. MERN Intern
+                </h3>
+                <p class="font-montserrat font-bold text-sm text-spidey-red">TheSmartBridge</p>
+              </div>
+              <span class="font-mono text-xs text-gray-300 bg-comic-dark px-2.5 py-1 border border-gray-700 font-bold">
+                May 2026 – June 2026
+              </span>
+            </div>
+
+            <p class="font-mono text-[11px] text-gray-400 mb-4 flex items-center gap-1.5">
+              <i class="fa-solid fa-globe text-spidey-red"></i> India
+            </p>
+
+            <ul class="space-y-2.5 text-xs text-gray-300 font-inter font-medium border-t border-gray-800 pt-4">
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Engineered full-stack web applications using the MERN stack (MongoDB, Express.js, React, Node.js).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Built responsive, accessible user interfaces with React and modern CSS.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Designed backend CRUD services and RESTful APIs with Express.js and MongoDB.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Implemented secure JWT authentication and token verification workflows.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Experience Card 3: Generative AI Engineer Intern -->
+          <div class="bg-comic-surface border-4 border-comic-white p-7 shadow-comic hover:-translate-y-1.5 transition-transform duration-300 swing-up relative group" style="transition-delay: 0.15s;">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="bg-spidey-red text-white text-[10px] font-black uppercase px-2.5 py-1 border border-white tracking-widest">
+                  GEN AI // GCP
+                </span>
+                <h3 class="font-montserrat text-2xl font-black text-white uppercase italic tracking-tight mt-2">
+                  3. Gen AI Engineer Intern
+                </h3>
+                <p class="font-montserrat font-bold text-sm text-spidey-red">TheSmartBridge</p>
+              </div>
+              <span class="font-mono text-xs text-gray-300 bg-comic-dark px-2.5 py-1 border border-gray-700 font-bold">
+                Nov 2025 – June 2026
+              </span>
+            </div>
+
+            <p class="font-mono text-[11px] text-gray-400 mb-4 flex items-center gap-1.5">
+              <i class="fa-solid fa-globe text-spidey-red"></i> India
+            </p>
+
+            <ul class="space-y-2.5 text-xs text-gray-300 font-inter font-medium border-t border-gray-800 pt-4">
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Gained hands-on experience with Generative AI and LLMs using Google Cloud Platform (GCP).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Worked on understanding AI model architecture, inference pipelines, and cloud-based deployment.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Practiced Prompt Engineering to optimize AI responses and improve model outputs for real-world use cases.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Explored Google Cloud AI services, scalable AI solutions, Responsible AI, and safety guardrails.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Experience Card 4: Salesforce Developer Summer Intern -->
+          <div class="bg-comic-surface border-4 border-comic-white p-7 shadow-comic hover:-translate-y-1.5 transition-transform duration-300 swing-up relative group" style="transition-delay: 0.2s;">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <span class="bg-blue-600 text-white text-[10px] font-black uppercase px-2.5 py-1 border border-white tracking-widest">
+                  SALESFORCE CHAMPION
+                </span>
+                <h3 class="font-montserrat text-2xl font-black text-white uppercase italic tracking-tight mt-2">
+                  4. Salesforce Summer Intern
+                </h3>
+                <p class="font-montserrat font-bold text-sm text-spidey-red">Salesforce (SmartBridge & AICTE)</p>
+              </div>
+              <span class="font-mono text-xs text-gray-300 bg-comic-dark px-2.5 py-1 border border-gray-700 font-bold">
+                May 2025 – Sept 2025
+              </span>
+            </div>
+
+            <p class="font-mono text-[11px] text-gray-400 mb-4 flex items-center gap-1.5">
+              <i class="fa-solid fa-award text-yellow-400"></i> Agentblazer Champion Program (8-Week Intensive)
+            </p>
+
+            <ul class="space-y-2.5 text-xs text-gray-300 font-inter font-medium border-t border-gray-800 pt-4">
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Salesforce platform fundamentals, organizational setup, user management, and security (Roles, Profiles, Permission sets).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Practical development with Apex, Lightning Web Components (LWC), Visualforce, and SOQL/SOSL.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Successfully completed 'Object Relationships Superbadge Unit', proving data modeling proficiency.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-spidey-red font-black">&bull;</span>
+                <span>Utilized Workflow rules, Validation rules, Approval processes, and custom cloud solutions.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         INTERACTIVE SKILL WEB SECTION (ISSUE #4)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-[#070808] relative z-10 border-b-4 border-comic-white overflow-hidden" id="skills">
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center mb-12 swing-up">
+          <div class="bg-spidey-red text-white px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-white shadow-[3px_3px_0_0_#fff]">
+            ISSUE #4
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-spidey-red border-b-4 border-white pb-2 inline-block">
+            Skill Web Graph
+          </h2>
+          <p class="font-mono text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest text-center">
+            INTERACTIVE TECH STACK NODE MAP &bull; HOVER NODES TO ENERGIZE THE WEB
+          </p>
+        </div>
+
+        <!-- Interactive Node Graph Container -->
+        <div class="w-full bg-[#050606] border-4 border-white rounded-none p-2 sm:p-4 shadow-comic relative swing-up">
+          
+          <div class="skill-web-wrapper h-[560px] sm:h-[600px] relative" id="skillWebContainer">
+            
+            <!-- Canvas for Dynamic Lines -->
+            <canvas id="skill-canvas"></canvas>
+
+            <!-- Central Core Node -->
+            <div class="skill-node core-node" id="node-core" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+              <i class="fa-solid fa-spider"></i> CYBER & AI CORE
+            </div>
+
+            <!-- Surrounding Skill Nodes -->
+            <div class="skill-node" id="node-langgraph"><i class="fa-solid fa-diagram-project text-spidey-red"></i> LangGraph Agents</div>
+            <div class="skill-node" id="node-dsa"><i class="fa-solid fa-code text-spidey-red"></i> C++ (DSA)</div>
+            <div class="skill-node" id="node-gcp"><i class="fa-brands fa-google text-spidey-red"></i> GCP Gen AI</div>
+            <div class="skill-node" id="node-cv"><i class="fa-solid fa-eye text-spidey-red"></i> Computer Vision</div>
+            <div class="skill-node" id="node-salesforce"><i class="fa-brands fa-salesforce text-spidey-red"></i> Apex & LWC</div>
+            <div class="skill-node" id="node-crypto"><i class="fa-solid fa-key text-spidey-red"></i> Trust Engine</div>
+            <div class="skill-node" id="node-mern"><i class="fa-brands fa-react text-spidey-red"></i> MERN & Node.js</div>
+            <div class="skill-node" id="node-zerotrust"><i class="fa-solid fa-user-shield text-spidey-red"></i> Zero-Trust & KYC</div>
+            <div class="skill-node" id="node-docker"><i class="fa-brands fa-docker text-spidey-red"></i> Docker & Linux</div>
+            <div class="skill-node" id="node-socket"><i class="fa-solid fa-network-wired text-spidey-red"></i> REST APIs & JWT</div>
+            <div class="skill-node" id="node-owasp"><i class="fa-solid fa-bug text-spidey-red"></i> Fraud Detection</div>
+            <div class="skill-node" id="node-rag"><i class="fa-solid fa-database text-spidey-red"></i> Vector DB & RAG</div>
+          </div>
+
+          <!-- Bottom Legend -->
+          <div class="border-t-2 border-gray-800 mt-4 pt-3 flex flex-wrap justify-between items-center px-4 text-xs font-mono text-gray-400">
+            <span><span class="text-spidey-red font-bold">&diams;</span> CORE DOMAINS: CYBERSECURITY, MULTI-AGENT AI, DSA, C2C PLATFORMS</span>
+            <span class="hidden sm:inline">CLICK OR HOVER TO ILLUMINATE STRANDS</span>
+          </div>
+        </div>
+
+        <!-- Categorized Skills Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+          
+          <!-- Category 1 -->
+          <div class="bg-comic-surface border-2 border-gray-700 p-5 shadow-[4px_4px_0_0_#E23636]">
+            <h4 class="font-montserrat font-black text-sm text-spidey-red uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-shield-virus"></i> Cybersecurity & Trust Systems
+            </h4>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Aadhaar KYC</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Trust Scoring</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Fraud Detection</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Zero-Trust RBAC</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">JWT Security</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Ethical Hacking</span>
+            </div>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="bg-comic-surface border-2 border-gray-700 p-5 shadow-[4px_4px_0_0_#E23636]">
+            <h4 class="font-montserrat font-black text-sm text-spidey-red uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-brain"></i> AI, ML & Vision
+            </h4>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">LangGraph</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Multi-Agent Systems</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Google GenAI (GCP)</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Prompt Engineering</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">OpenCV</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">MediaPipe</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">RAG Pipelines</span>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="bg-comic-surface border-2 border-gray-700 p-5 shadow-[4px_4px_0_0_#E23636]">
+            <h4 class="font-montserrat font-black text-sm text-spidey-red uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-laptop-code"></i> Full-Stack & Cloud Commerce
+            </h4>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">React.js</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Node.js & Express</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">MongoDB & Firebase</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Stripe Payments</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">C++ (DSA)</span>
+              <span class="px-2.5 py-1 bg-comic-dark border border-gray-700 text-white font-mono text-xs">Salesforce (Apex, LWC)</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         KEY FEATURED PROJECTS / MISSION LOG (ISSUE #5)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-white text-comic-black relative z-10" id="projects">
+      <div class="absolute inset-0 halftone-bg opacity-15 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-end mb-16 swing-up">
+          <div>
+            <div class="bg-spidey-red text-white px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-2 border-2 border-black inline-block shadow-[3px_3px_0_0_#000]">
+              ISSUE #5
+            </div>
+            <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-comic-black">
+              Mission Log
+            </h2>
+            <p class="font-mono text-xs text-spidey-red font-bold uppercase tracking-widest mt-1">
+              FEATURED ENGINEERING DEPLOYMENTS
+            </p>
+          </div>
+
+          <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center text-comic-black font-montserrat font-black uppercase tracking-widest hover:text-spidey-red transition-colors text-xs border-b-2 border-black hover:border-spidey-red pb-1">
+            View Full GitHub Archive <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+
+        <!-- 4 Projects Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Project 1: Lovable Clone -->
+          <div class="bg-comic-black text-white border-4 border-comic-black rounded-none overflow-hidden transition-all duration-300 swing-up relative group shadow-comic-dark hover:shadow-comic hover:-translate-y-2">
+            
+            <div class="h-52 w-full relative overflow-hidden bg-black border-b-4 border-comic-black">
+              <div class="bg-cover bg-center w-full h-full opacity-80 group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
+                   style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAnE4hHjFzxSiM8oWmlTARIQJWOzPuR0uP_l7c_sCPj8Iu-TVj3hk1DUbB2FVo8uSD0RsV3CglADdpYYtjcWKw39oKTdV0ECWEFozex_jeHbIJ-5czAa77BBaatg7iqto6s6lMcL0B8f8PSECi6jbHQKqYfS0FlDLGP535NPRzH_da0tjqB2uL9D2rJ5Qyjo6gXlUqmDkzQLxV5HaBdBmaLVsCHRtifba0PMkwkv6Fub4M6hXPCLFLPOg');">
+              </div>
+              <div class="absolute top-3 right-3 bg-comic-yellow text-black font-montserrat font-black text-[11px] px-2.5 py-1 uppercase border-2 border-black transform rotate-2 shadow-[2px_2px_0_0_#000]">
+                MULTI-AGENT AI
+              </div>
+            </div>
+
+            <div class="p-6 relative">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-0.5 bg-white text-black font-montserrat font-black text-[10px] uppercase border-2 border-black">LangGraph</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">LangChain</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Groq</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Python</span>
+              </div>
+
+              <h3 class="font-montserrat text-2xl font-black text-white mb-2 uppercase italic tracking-tight">
+                1. Lovable Clone — Multi-Agent AI Builder
+              </h3>
+
+              <p class="font-inter text-sm text-gray-300 mb-6 line-clamp-3">
+                An AI application builder using Agentic AI where multiple specialized agents (Planner, Architect, Coder) collaborate through a LangGraph state graph to autonomously generate full-stack web applications from natural language prompts.
+              </p>
+
+              <div class="flex items-center justify-between border-t border-gray-800 pt-4">
+                <a href="https://github.com/Vishhal23/lovable-clone" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-montserrat font-black text-xs uppercase tracking-widest text-spidey-red hover:text-white transition-colors">
+                  <i class="fa-brands fa-github mr-1.5"></i> Inspect Source <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                </a>
+                <span class="font-mono text-[10px] text-gray-400 uppercase">Agentic AI // Full Stack</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Project 2: AVATARAX -->
+          <div class="bg-comic-black text-white border-4 border-comic-black rounded-none overflow-hidden transition-all duration-300 swing-up relative group shadow-comic-dark hover:shadow-comic hover:-translate-y-2" style="transition-delay: 0.1s;">
+            
+            <div class="h-52 w-full relative overflow-hidden bg-black border-b-4 border-comic-black">
+              <div class="bg-cover bg-center w-full h-full opacity-80 group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
+                   style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgcSmxNw2Fj-5w9H6J8P_gV84B7LZK-kGCpqnC-Cu_7IKhwjkQzspsfxjnOoctvKJAgF7w52j2-33Ri-kpj_lQz19XUbO46CUanuMZ9_dYNQBvyqY47_8tOqVEbfuNJmqHspATI4nwrr8-rgrLax9Cjt68b7Cb_oz8ypj4_u8o7iZogRfZXvGGkuBx04j_yaS4DuX__8y8FtfTWf9TSwm9uLjO80kP-Ogi73GgNvoO1KlUfDGmG09rPg');">
+              </div>
+              <div class="absolute top-3 right-3 bg-spidey-red text-white font-montserrat font-black text-[11px] px-2.5 py-1 uppercase border-2 border-white transform -rotate-2 shadow-[2px_2px_0_0_#000]">
+                COMPUTER VISION 60+ FPS
+              </div>
+            </div>
+
+            <div class="p-6 relative">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-0.5 bg-white text-black font-montserrat font-black text-[10px] uppercase border-2 border-black">Python</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">OpenCV</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">MediaPipe</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">NumPy</span>
+              </div>
+
+              <h3 class="font-montserrat text-2xl font-black text-white mb-2 uppercase italic tracking-tight">
+                2. AVATARAX — Gesture Combat System
+              </h3>
+
+              <p class="font-inter text-sm text-gray-300 mb-6 line-clamp-3">
+                Real-time controller-free elemental battle system using computer vision. Tracks webcam hand poses and maps gestures to fire, water, blast, and energy attacks at 60+ FPS with sub-50ms latency.
+              </p>
+
+              <div class="flex items-center justify-between border-t border-gray-800 pt-4">
+                <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-montserrat font-black text-xs uppercase tracking-widest text-spidey-red hover:text-white transition-colors">
+                  <i class="fa-solid fa-hand-fist mr-1.5"></i> Live Gesture Engine <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                </a>
+                <span class="font-mono text-[10px] text-gray-400 uppercase">AI // Real-Time Vision</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Project 3: NearbyNode (Updated Real Product Info) -->
+          <div class="bg-comic-black text-white border-4 border-comic-black rounded-none overflow-hidden transition-all duration-300 swing-up relative group shadow-comic-dark hover:shadow-comic hover:-translate-y-2" style="transition-delay: 0.15s;">
+            
+            <div class="h-52 w-full relative overflow-hidden bg-black border-b-4 border-comic-black">
+              <div class="bg-cover bg-center w-full h-full opacity-80 group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
+                   style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDIEQ4tlXzEeDHH3V1obJWrG_oUC5Gs2BYN8v2KNk9mLO5wbr87SnDCpa8I0-wJzAbDzKtfQ3juKj5d4HJg5rG_6_BhKuV7V-gL-RjRhl5xnFfR9IqLQpua9h_2RJfR-geEnNhsnTaT0yc0rXkHhax1quf_LF662C-9faXu6fMdxl6_vJsRqSKUMTZVWTIKobVA0J8vVow9fB_iDdXY5TnBjupDza2iQlmTXqEU5cCnVqFVlVcP1Dh7Jg');">
+              </div>
+              <div class="absolute top-3 right-3 bg-green-500 text-black font-montserrat font-black text-[11px] px-2.5 py-1 uppercase border-2 border-black transform rotate-1 shadow-[2px_2px_0_0_#000]">
+                TRUST C2C MARKETPLACE
+              </div>
+            </div>
+
+            <div class="p-6 relative">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-0.5 bg-white text-black font-montserrat font-black text-[10px] uppercase border-2 border-black">React.js</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Node.js</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">MongoDB</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Firebase</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Stripe</span>
+                <span class="px-2 py-0.5 bg-spidey-red text-white font-montserrat font-black text-[10px] uppercase border-2 border-white">Aadhaar KYC</span>
+              </div>
+
+              <h3 class="font-montserrat text-2xl font-black text-white mb-2 uppercase italic tracking-tight flex items-center gap-2">
+                3. NearbyNode — Local C2C Marketplace 🌐
+              </h3>
+
+              <p class="font-inter text-sm text-gray-300 mb-6 line-clamp-3">
+                A trust-driven C2C marketplace empowering informal local sellers (artisans, home cooks, neighborhood vendors) without trade licenses or GST. Features simulated Aadhaar KYC, dynamic Trust Scoring (ratings, transactions, account age), fraud protection, and role-based access (Buyer | Seller | Admin). Led team from sketch to demo at Sphoorthy Engineering College.
+              </p>
+
+              <div class="flex flex-wrap items-center justify-between gap-3 border-t border-gray-800 pt-4">
+                <div class="flex items-center gap-4">
+                  <a href="https://nearbynode.netlify.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-montserrat font-black text-xs uppercase tracking-widest text-spidey-red hover:text-white transition-colors">
+                    <i class="fa-solid fa-bolt mr-1.5 text-yellow-400"></i> Live Platform <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                  </a>
+                  <a href="https://github.com/Vishhal23/nearbynode" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-montserrat font-black text-xs uppercase tracking-widest text-gray-400 hover:text-white transition-colors">
+                    <i class="fa-brands fa-github mr-1.5"></i> GitHub <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                  </a>
+                </div>
+                <span class="font-mono text-[10px] text-gray-400 uppercase">Team Lead // Full Stack & Trust Engine</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Project 4: School of Computing LMS -->
+          <div class="bg-comic-black text-white border-4 border-comic-black rounded-none overflow-hidden transition-all duration-300 swing-up relative group shadow-comic-dark hover:shadow-comic hover:-translate-y-2" style="transition-delay: 0.2s;">
+            
+            <div class="h-52 w-full relative overflow-hidden bg-black border-b-4 border-comic-black">
+              <div class="bg-cover bg-center w-full h-full opacity-80 group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
+                   style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAnE4hHjFzxSiM8oWmlTARIQJWOzPuR0uP_l7c_sCPj8Iu-TVj3hk1DUbB2FVo8uSD0RsV3CglADdpYYtjcWKw39oKTdV0ECWEFozex_jeHbIJ-5czAa77BBaatg7iqto6s6lMcL0B8f8PSECi6jbHQKqYfS0FlDLGP535NPRzH_da0tjqB2uL9D2rJ5Qyjo6gXlUqmDkzQLxV5HaBdBmaLVsCHRtifba0PMkwkv6Fub4M6hXPCLFLPOg');">
+              </div>
+              <div class="absolute top-3 right-3 bg-purple-500 text-white font-montserrat font-black text-[11px] px-2.5 py-1 uppercase border-2 border-black transform -rotate-2 shadow-[2px_2px_0_0_#000]">
+                INSTITUTIONAL LMS
+              </div>
+            </div>
+
+            <div class="p-6 relative">
+              <div class="flex flex-wrap gap-2 mb-3">
+                <span class="px-2 py-0.5 bg-white text-black font-montserrat font-black text-[10px] uppercase border-2 border-black">React</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Node.js</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">MongoDB</span>
+                <span class="px-2 py-0.5 bg-gray-800 text-white font-montserrat font-bold text-[10px] uppercase border-2 border-gray-600">Chart.js</span>
+              </div>
+
+              <h3 class="font-montserrat text-2xl font-black text-white mb-2 uppercase italic tracking-tight">
+                4. School of Computing LMS
+              </h3>
+
+              <p class="font-inter text-sm text-gray-300 mb-6 line-clamp-3">
+                Full-scale internal LMS built to enhance student learning analytics with progress tracking dashboards, faculty grading portals, and problem-solving metrics engine. Demonstrated and adopted for institutional use.
+              </p>
+
+              <div class="flex items-center justify-between border-t border-gray-800 pt-4">
+                <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="inline-flex items-center font-montserrat font-black text-xs uppercase tracking-widest text-spidey-red hover:text-white transition-colors">
+                  <i class="fa-solid fa-graduation-cap mr-1.5"></i> Platform Architecture <i class="fa-solid fa-arrow-up-right-from-square ml-1.5 text-[10px]"></i>
+                </a>
+                <span class="font-mono text-[10px] text-gray-400 uppercase">Full Stack // Analytics</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         HONORS, AWARDS & CERTIFICATIONS (ISSUE #6)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-black relative z-10 border-b-4 border-comic-white overflow-hidden" id="awards">
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center mb-16 swing-up">
+          <div class="bg-comic-yellow text-black px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-black shadow-[3px_3px_0_0_#fff]">
+            ISSUE #6
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-spidey-red border-b-4 border-white pb-2 inline-block">
+            Honors & Certifications
+          </h2>
+          <p class="font-mono text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest">
+            RECOGNITIONS & VERIFIED CREDENTIALS
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          
+          <!-- Award 1: MSME Ideathon -->
+          <div class="bg-comic-surface border-4 border-white p-6 shadow-comic swing-right relative flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 bg-comic-yellow text-black flex items-center justify-center font-black text-lg border-2 border-black shadow-[2px_2px_0_0_#000]">
+                  <i class="fa-solid fa-trophy"></i>
+                </span>
+                <div>
+                  <span class="font-mono text-[10px] text-spidey-red font-bold uppercase">NATIONAL RECOGNITION // 2024–2025</span>
+                  <h3 class="font-montserrat text-lg font-black text-white uppercase italic">MSME Ideathon 6.0 Winner</h3>
+                </div>
+              </div>
+              <p class="font-mono text-xs text-gray-300 font-bold mb-2">Issuer: Ministry of MSME, Govt. of India</p>
+              <p class="font-inter text-xs text-gray-400 leading-relaxed border-t border-gray-800 pt-3">
+                Selected among national winning teams for pitching an innovative technological solution to real-world industrial problem statements.
+              </p>
+            </div>
+          </div>
+
+          <!-- Award 2: Salesforce Agentblazer Champion -->
+          <div class="bg-comic-surface border-4 border-white p-6 shadow-comic swing-up relative flex flex-col justify-between" style="transition-delay: 0.1s;">
+            <div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 bg-spidey-red text-white flex items-center justify-center font-black text-lg border-2 border-white shadow-[2px_2px_0_0_#fff]">
+                  <i class="fa-brands fa-salesforce"></i>
+                </span>
+                <div>
+                  <span class="font-mono text-[10px] text-spidey-red font-bold uppercase">SALESFORCE & AICTE // 2025</span>
+                  <h3 class="font-montserrat text-lg font-black text-white uppercase italic">Salesforce Champion</h3>
+                </div>
+              </div>
+              <p class="font-mono text-xs text-gray-300 font-bold mb-2">Issuer: Salesforce & AICTE</p>
+              <p class="font-inter text-xs text-gray-400 leading-relaxed border-t border-gray-800 pt-3">
+                Awarded Champion recognition for excellence in Salesforce platform fundamentals, Apex, LWC, and Superbadge completion.
+              </p>
+            </div>
+          </div>
+
+          <!-- Award 3: HR Conclave Logistics Committee Member -->
+          <div class="bg-comic-surface border-4 border-white p-6 shadow-comic swing-left relative flex flex-col justify-between" style="transition-delay: 0.15s;">
+            <div>
+              <div class="flex items-center gap-3 mb-3">
+                <span class="w-10 h-10 bg-blue-600 text-white flex items-center justify-center font-black text-lg border-2 border-white shadow-[2px_2px_0_0_#fff]">
+                  <i class="fa-solid fa-people-roof"></i>
+                </span>
+                <div>
+                  <span class="font-mono text-[10px] text-spidey-red font-bold uppercase">EVENT LEADERSHIP // 2025</span>
+                  <h3 class="font-montserrat text-lg font-black text-white uppercase italic">HR Conclave Logistics</h3>
+                </div>
+              </div>
+              <p class="font-mono text-xs text-gray-300 font-bold mb-2">Role: Logistics Committee Member</p>
+              <p class="font-inter text-xs text-gray-400 leading-relaxed border-t border-gray-800 pt-3">
+                Managed critical logistics and transportation coordination for visiting corporate HR leaders during an unexpected city-wide cab strike, successfully hosting senior delegates and gaining deep insights into industry workforce expectations.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 6 Certifications Matrix -->
+        <h3 class="font-montserrat font-black text-xl text-white uppercase italic tracking-wider mb-6 flex items-center gap-2">
+          <i class="fa-solid fa-certificate text-spidey-red"></i> Verified Professional Certifications
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-solid fa-user-shield"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Ethical Hacking</h4>
+              <p class="font-mono text-[11px] text-gray-400">Certified Authority &bull; 2024</p>
+            </div>
+          </div>
+
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-brands fa-salesforce"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Salesforce Agentblazer Champion</h4>
+              <p class="font-mono text-[11px] text-gray-400">Salesforce & AICTE &bull; 2025</p>
+            </div>
+          </div>
+
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-brands fa-google"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Google Generative AI</h4>
+              <p class="font-mono text-[11px] text-gray-400">Google Cloud Platform &bull; 2024–2025</p>
+            </div>
+          </div>
+
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-brands fa-java"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Programming Using Java</h4>
+              <p class="font-mono text-[11px] text-gray-400">Certified Authority &bull; 2024</p>
+            </div>
+          </div>
+
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-solid fa-lock"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Introduction to Cybersecurity</h4>
+              <p class="font-mono text-[11px] text-gray-400">Cisco / Industry Leader &bull; 2023</p>
+            </div>
+          </div>
+
+          <div class="bg-comic-dark border-2 border-gray-700 p-4 hover:border-spidey-red transition-colors flex items-start gap-3">
+            <span class="text-spidey-red font-black text-base mt-0.5"><i class="fa-brands fa-free-code-camp"></i></span>
+            <div>
+              <h4 class="font-montserrat font-bold text-sm text-white">Responsive Web Design</h4>
+              <p class="font-mono text-[11px] text-gray-400">freeCodeCamp &bull; 2023</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         EDUCATION (ISSUE #7)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-white text-comic-black relative z-10 border-b-4 border-comic-black" id="education">
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center mb-12 swing-up">
+          <div class="bg-spidey-red text-white px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-black shadow-[3px_3px_0_0_#000]">
+            ISSUE #7
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-comic-black border-b-4 border-spidey-red pb-2 inline-block">
+            Academic Foundation
+          </h2>
+          <p class="font-mono text-xs text-gray-700 mt-2 font-bold uppercase tracking-widest">
+            EDUCATION & THEORETICAL RIGOR
+          </p>
+        </div>
+
+        <div class="bg-white border-4 border-comic-black p-8 sm:p-10 shadow-[8px_8px_0_0_#050505] swing-up">
+          <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-gray-300 pb-6 mb-6">
+            <div>
+              <span class="bg-spidey-red text-white text-[10px] font-black uppercase px-2.5 py-1 border border-black tracking-widest">
+                UNDERGRADUATE DEGREE
+              </span>
+              <h3 class="font-montserrat text-3xl font-black text-comic-black uppercase italic tracking-tight mt-2">
+                Sphoorthy Engineering College
+              </h3>
+              <p class="font-montserrat font-bold text-base text-spidey-red">
+                Bachelor of Technology (B.Tech) in Cybersecurity
+              </p>
+            </div>
+            <div class="mt-4 md:mt-0 text-left md:text-right">
+              <span class="font-mono text-sm text-comic-black bg-yellow-300 px-3 py-1 border-2 border-black font-black block">
+                2023 – 2027
+              </span>
+              <span class="font-mono text-xs text-gray-600 block mt-1">
+                <i class="fa-solid fa-location-dot text-spidey-red"></i> Hyderabad, Telangana, India
+              </span>
+            </div>
+          </div>
+
+          <h4 class="font-montserrat font-black text-sm uppercase text-gray-800 mb-3 tracking-wider">
+            Academic Focus & Specialization Areas:
+          </h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-code text-spidey-red"></i> Data Structures & Algorithms with C++
+            </div>
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-lock text-spidey-red"></i> Cryptography & Network Protocols
+            </div>
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-spidey-red"></i> Defensive & Offensive Security
+            </div>
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-microchip text-spidey-red"></i> Operating Systems Architecture
+            </div>
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-network-wired text-spidey-red"></i> Socket & Network Security
+            </div>
+            <div class="bg-gray-100 border-2 border-gray-300 p-3 font-montserrat font-bold text-xs uppercase text-comic-black flex items-center gap-2">
+              <i class="fa-solid fa-brain text-spidey-red"></i> Artificial Intelligence Integration
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         SIGNAL ME / CONTACT SECTION (TACTICAL HUD TERMINAL)
+    ==================================================== -->
+    <section class="py-20 px-4 sm:px-8 lg:px-16 bg-comic-black relative z-10 overflow-hidden" id="contact">
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center mb-16 swing-up">
+          <div class="bg-spidey-red text-white px-3 py-1 font-montserrat font-black text-xs uppercase tracking-widest mb-3 border-2 border-white shadow-[3px_3px_0_0_#fff]">
+            TRANSMIT SIGNAL
+          </div>
+          <h2 class="font-montserrat text-4xl sm:text-5xl font-black uppercase italic tracking-tighter text-white border-b-4 border-spidey-red pb-2 inline-block">
+            Initiate Contact
+          </h2>
+          <p class="font-mono text-xs text-gray-400 mt-2 font-bold uppercase tracking-widest">
+            DIRECT COMMS &bull; RECRUITMENT, COLLABORATION & INQUIRIES
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          
+          <!-- Contact Channels List -->
+          <div class="lg:col-span-5 space-y-4 swing-right">
+            
+            <!-- Email -->
+            <div class="bg-comic-surface border-4 border-white p-5 shadow-comic flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-spidey-red text-white flex items-center justify-center text-xl border-2 border-white">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                  <span class="font-mono text-[10px] text-gray-400 uppercase font-bold">EMAIL PROTOCOL</span>
+                  <a href="mailto:vishalgudla2@gmail.com" class="font-montserrat font-bold text-sm text-white hover:text-spidey-red transition-colors block">
+                    vishalgudla2@gmail.com
+                  </a>
+                </div>
+              </div>
+              <button onclick="copyToClipboard('vishalgudla2@gmail.com', 'email')" class="px-3 py-1.5 bg-comic-dark border border-gray-600 text-xs font-mono font-bold hover:bg-spidey-red hover:text-white hover:border-white transition-all">
+                COPY
+              </button>
+            </div>
+
+            <!-- Phone / Mobile -->
+            <div class="bg-comic-surface border-4 border-white p-5 shadow-comic flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-spidey-red text-white flex items-center justify-center text-xl border-2 border-white">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <span class="font-mono text-[10px] text-gray-400 uppercase font-bold">MOBILE FREQUENCY</span>
+                  <a href="tel:+919553706650" class="font-montserrat font-bold text-sm text-white hover:text-spidey-red transition-colors block">
+                    +91 9553706650
+                  </a>
+                </div>
+              </div>
+              <button onclick="copyToClipboard('+919553706650', 'phone number')" class="px-3 py-1.5 bg-comic-dark border border-gray-600 text-xs font-mono font-bold hover:bg-spidey-red hover:text-white hover:border-white transition-all">
+                COPY
+              </button>
+            </div>
+
+            <!-- LinkedIn -->
+            <div class="bg-comic-surface border-4 border-white p-5 shadow-comic flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-600 text-white flex items-center justify-center text-xl border-2 border-white">
+                  <i class="fa-brands fa-linkedin-in"></i>
+                </div>
+                <div>
+                  <span class="font-mono text-[10px] text-gray-400 uppercase font-bold">PROFESSIONAL NETWORK</span>
+                  <a href="https://linkedin.com/in/gudlavishal" target="_blank" rel="noopener noreferrer" class="font-montserrat font-bold text-sm text-white hover:text-spidey-red transition-colors block">
+                    linkedin.com/in/gudlavishal
+                  </a>
+                </div>
+              </div>
+              <a href="https://linkedin.com/in/gudlavishal" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-comic-dark border border-gray-600 text-xs font-mono font-bold hover:bg-spidey-red hover:text-white hover:border-white transition-all">
+                OPEN
+              </a>
+            </div>
+
+            <!-- GitHub -->
+            <div class="bg-comic-surface border-4 border-white p-5 shadow-comic flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-comic-dark text-white flex items-center justify-center text-xl border-2 border-white">
+                  <i class="fa-brands fa-github"></i>
+                </div>
+                <div>
+                  <span class="font-mono text-[10px] text-gray-400 uppercase font-bold">SOURCE VAULT</span>
+                  <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="font-montserrat font-bold text-sm text-white hover:text-spidey-red transition-colors block">
+                    github.com/Vishhal23
+                  </a>
+                </div>
+              </div>
+              <a href="https://github.com/Vishhal23" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-comic-dark border border-gray-600 text-xs font-mono font-bold hover:bg-spidey-red hover:text-white hover:border-white transition-all">
+                OPEN
+              </a>
+            </div>
+
+            <!-- Live Portfolio URL -->
+            <div class="bg-comic-surface border-4 border-white p-5 shadow-comic flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-yellow-400 text-black flex items-center justify-center text-xl border-2 border-black">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <span class="font-mono text-[10px] text-gray-400 uppercase font-bold">NETLIFY DEPLOYMENT</span>
+                  <a href="https://vishal-gudla-portfolio.netlify.app" target="_blank" rel="noopener noreferrer" class="font-montserrat font-bold text-sm text-white hover:text-spidey-red transition-colors block">
+                    vishal-gudla-portfolio.netlify.app
+                  </a>
+                </div>
+              </div>
+              <button onclick="copyToClipboard('https://vishal-gudla-portfolio.netlify.app', 'portfolio url')" class="px-3 py-1.5 bg-comic-dark border border-gray-600 text-xs font-mono font-bold hover:bg-spidey-red hover:text-white hover:border-white transition-all">
+                COPY
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Tactical Message Terminal Form -->
+          <div class="lg:col-span-7 swing-left">
+            <div class="bg-comic-dark border-4 border-spidey-red p-8 sm:p-10 shadow-[8px_8px_0_0_#fff] relative">
+              
+              <div class="flex justify-between items-center border-b-2 border-gray-800 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                  <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                  <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                  <span class="font-mono text-xs text-gray-400 font-bold ml-2">TERMINAL // TRANSMIT_SIGNAL.EXE</span>
+                </div>
+                <span class="font-mono text-[10px] text-spidey-red font-bold uppercase">256-BIT ENCRYPTED</span>
+              </div>
+
+              <form id="signalForm" class="space-y-5">
+                <div>
+                  <label class="block font-montserrat font-bold text-xs uppercase text-gray-300 tracking-wider mb-2" for="formName">
+                    Agent Name / Recruiter Identifier
+                  </label>
+                  <input type="text" id="formName" required placeholder="e.g. John Doe / Tech Lead" 
+                         class="w-full bg-[#121414] border-2 border-gray-700 focus:border-spidey-red text-white p-3 font-mono text-sm outline-none transition-colors"/>
+                </div>
+
+                <div>
+                  <label class="block font-montserrat font-bold text-xs uppercase text-gray-300 tracking-wider mb-2" for="formEmail">
+                    Return Signal Frequency (Email)
+                  </label>
+                  <input type="email" id="formEmail" required placeholder="name@company.com" 
+                         class="w-full bg-[#121414] border-2 border-gray-700 focus:border-spidey-red text-white p-3 font-mono text-sm outline-none transition-colors"/>
+                </div>
+
+                <div>
+                  <label class="block font-montserrat font-bold text-xs uppercase text-gray-300 tracking-wider mb-2" for="formMessage">
+                    Mission Briefing / Message Payload
+                  </label>
+                  <textarea id="formMessage" rows="4" required placeholder="Describe your project, open role, or collaboration inquiry..." 
+                            class="w-full bg-[#121414] border-2 border-gray-700 focus:border-spidey-red text-white p-3 font-mono text-sm outline-none transition-colors"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-spidey-red text-white font-montserrat font-black text-sm uppercase tracking-widest border-2 border-white hover:bg-white hover:text-spidey-red hover:border-spidey-red transition-all shadow-comic-white hover:shadow-none transform hover:-translate-y-0.5">
+                  <i class="fa-solid fa-paper-plane mr-2"></i> Transmit Message Payload
+                </button>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================
+         FOOTER (END CREDITS PANEL)
+    ==================================================== -->
+    <footer class="bg-comic-black py-16 px-4 sm:px-8 border-t-8 border-spidey-red relative z-10 overflow-hidden">
+      
+      <!-- Starburst radial lines -->
+      <div class="absolute inset-0 opacity-10 pointer-events-none" 
+           style="background: repeating-conic-gradient(from 0deg, transparent 0deg 10deg, #fff 10deg 20deg);">
+      </div>
+
+      <div class="max-w-4xl mx-auto flex flex-col items-center justify-center w-full gap-8 relative z-10 bg-black/90 p-8 sm:p-12 border-4 border-white shadow-comic">
+        
+        <div class="text-center">
+          <span class="text-spidey-red font-montserrat font-black text-xs uppercase tracking-widest block mb-2">
+            TO BE CONTINUED...
+          </span>
+          <a class="text-white font-montserrat text-4xl sm:text-6xl font-black uppercase italic tracking-tighter hover:text-spidey-red transition-colors block leading-none" href="#hero">
+            GUDLA VISHAL
+          </a>
+          <p class="text-gray-400 font-mono text-xs uppercase tracking-widest mt-3">
+            Will return in the next production deployment.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-6 border-y-2 border-gray-800 py-4 w-full text-center">
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#hero">Issue #1</a>
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#about">Origin</a>
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#experience">Missions</a>
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#skills">Skill Web</a>
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#projects">Deployments</a>
+          <a class="text-gray-400 font-montserrat font-bold text-xs uppercase tracking-widest hover:text-spidey-red transition-colors" href="#contact">Signal</a>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+          <div class="w-14 h-14 bg-white text-black flex items-center justify-center border-4 border-comic-black shadow-[3px_3px_0_0_#E23636] font-montserrat font-black text-xl italic">
+            A+
+          </div>
+          <div>
+            <p class="font-montserrat font-bold text-xs uppercase tracking-widest text-white">
+              Approved by the Comics Code Authority &bull; Certified Portfolio
+            </p>
+            <p class="font-mono text-[11px] text-gray-500 mt-0.5">
+              &copy; 2026 Gudla Vishal &bull; All Rights Reserved. Built with WebGL, Three.js & Modern CSS.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Interactive JavaScript Engine -->
+  <script src="app.js"></script>
+
+</body>
+</html>
