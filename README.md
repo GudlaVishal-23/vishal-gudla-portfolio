@@ -79,6 +79,7 @@ The portfolio merges modern comic book aesthetics (Ben-Day halftone patterns, bo
 - **⚡ Salesforce Agentblazer Champion:** Recognized by Salesforce & AICTE for excellence in Apex, Lightning Web Components (LWC), and platform fundamentals.
 - **🚀 SOC LMS Launch & Faculty Demonstration:** Coordinated the launch event and conducted the live platform demonstration to all institutional faculty members and college leadership.
 - **👔 HR Conclave 2025 Logistics Leadership:** Managed emergency transportation operations for visiting corporate HR leaders during a city-wide cab strike, ensuring 100% executive presence.
+- **🛡️ Smart India Hackathon (SIH) & Tech Bootcamps:** Technical coordinator representing Dept of Cybersecurity, leading coding challenges, algorithmic tracks, and developer workshops.
 
 ---
 
@@ -96,6 +97,7 @@ spidport/
 ├── mind-sports-cert.jpg    # Certificate of Excellence (Mind Sports Activity)
 ├── lms-launch.jpg          # SOC LMS Inauguration & Faculty Demo Photo
 ├── hr-conclave.jpg         # HR Conclave Corporate Delegation Photo
+├── hackathon.jpg           # Smart India Hackathon (SIH) Dept of Cybersecurity Photo
 ├── project-lovable.jpg     # Lovable Clone Project Preview
 ├── project-avatarax.jpg    # AVATARAX Computer Vision Project Preview
 ├── project-nearbynode.jpg  # NearbyNode Marketplace Project Preview

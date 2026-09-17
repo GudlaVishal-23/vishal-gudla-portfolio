@@ -1,0 +1,13 @@
+{
+  "name": "spider-devtools",
+  "version": "1.0.0",
+  "description": "Comprehensive developer tools, QA testing, design tokens, and verification skills for Spidport.",
+  "skills": [
+    "portfolio-tester",
+    "spider-design-tokens",
+    "code-verifier"
+  ],
+  "rules": [
+    "claude_code_mode.md"
+  ]
+}
